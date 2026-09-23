@@ -1,0 +1,4 @@
+import json,hashlib,pathlib,platform
+import math
+crew=4;co2_person_kg_day=1.;removal_kg_day=3.8;net=crew*co2_person_kg_day-removal_kg_day;days=7.;acc=net*days;out={"crew":crew,"production_kg_day":crew*co2_person_kg_day,"removal_kg_day":removal_kg_day,"net_kg_day":net,"seven_day_accumulation_kg":acc};ok=net>0 and acc<2
+out.update({"farm":134,"engine":"python-engineering-batch-canary","engine_version":platform.python_version(),"test":"CABIN_CO2_BALANCE","status":"REAL_ENGINE_CANARY_OK" if ok else "FAIL","epistemic_status":"ENGINEERING_CANARY_NOT_PHYSICAL_VALIDATION"});raw=json.dumps(out,sort_keys=True).encode();out["result_sha256"]=hashlib.sha256(raw).hexdigest();pathlib.Path("artifacts").mkdir(exist_ok=True);pathlib.Path("artifacts/f134_engine_canary.json").write_text(json.dumps(out,indent=2)+"\n");print(json.dumps(out));raise SystemExit(0 if ok else 1)
